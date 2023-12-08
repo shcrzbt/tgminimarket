@@ -34,7 +34,7 @@ jobs:
               run: npm install
 
             - name: Build project
-              run: npm build
+              run: npm run build
 
             - name: Zip dist directory
               run: zip -r dist.zip dist/*
