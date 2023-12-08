@@ -12,11 +12,9 @@
 	const showCatPicker = ref(false)
 	const selectedProductIds = ref({})
 
-	const productsComputed = computed(()=> products.value.filter((el)=> {
-		const searchFilter = el.title.toLocaleLowerCase().includes(filters.search.toLocaleLowerCase())
-		const priceFilter = el.price > filters.price[0] && el.price < filters.price[1]
-		const categories = el.category.toLocaleLowerCase().includes(filters.category?.toLocaleLowerCase())
-		return  searchFilter && priceFilter && (categories ? categories : true)
+	const categoriesComputed = computed(()=> categories.value.map((el)=> {
+		if (el === 'all') return {text: 'Все', value:'all'}
+		return {text: el, value:el}
 	}))
 
 	const showActionButton = computed(()=>  {
@@ -47,24 +45,29 @@
 		productsFiltered.value = products.value.filter((el)=> {
 		const searchFilter = el.title.toLocaleLowerCase().includes(filters.search.toLocaleLowerCase())
 		const priceFilter = el.price > filters.price[0] && el.price < filters.price[1]
+		WebApp.HapticFeedback.impactOccurred("heavy")
 		return searchFilter && priceFilter
 	})}
+
 	const searchProducts = () => {
 		productsFiltered.value = products.value.filter((el)=> {
 		const searchFilter = el.title.toLocaleLowerCase().includes(filters.search.toLocaleLowerCase())
 		return searchFilter
 	})}
+
 	const filters = reactive({
 		search: '',
 		category: null,
 		price: [0, 1000]
 
 	})
+
 	const getCategoriesList = async () => {
 		await axios.get("https://fakestoreapi.com/products/categories").then(({data}) => {
 			categories.value = ['all', ...data]
 		});
 	};
+
 	const getProductList = async () => {
 		loading.value = true
 		let categoryQuery = '';
@@ -80,15 +83,18 @@
 
 		});
 	};
+
 	const onSubmitFilter = async ()=> {
 		popupModel.value = false
 		await getProductList()
 		filterProducts()
 	}
+
 	const onAddToCart = (id, productName)=> {
 		Object.assign(selectedProductIds.value, id)
 		selectedProductIds.value[id] = 1
 	}
+
 	const updateProductCount = (id, count, productName)=> {
 		if (count === 0) {
 			delete selectedProductIds.value[id]
@@ -96,7 +102,7 @@
 		}
 		selectedProductIds.value[id] = count
 	}
-	const overlayModel = ref(false)
+
 	onBeforeMount(async () => {
 		await getProductList();
 		await getCategoriesList();
@@ -113,7 +119,13 @@
 					<van-cell title="До" :value="filters.price[1] + ' $'" />
 					<van-field>
 						<template #input>
-							<van-slider range :step="10" :min="0" :max="1000" v-model="filters.price" />
+							<van-slider
+								range
+								:step="10"
+								:min="0"
+								:max="1000"
+								v-model="filters.price"
+								@update:model-value="WebApp.HapticFeedback.impactOccurred('soft')" />
 						</template>
 					</van-field>
 				</van-cell-group>
@@ -125,7 +137,10 @@
 						name="category"
 						placeholder="Выберите категорию"
 						@click="showCatPicker = true" />
-					<van-popup v-model:show="showCatPicker" position="top">
+					<van-popup
+						v-model:show="showCatPicker"
+						@update:show="WebApp.HapticFeedback.impactOccurred('soft')"
+						position="top">
 						<van-picker
 							:columns="categoriesComputed"
 							@confirm="
@@ -134,6 +149,7 @@
 									showCatPicker = false;
 								}
 							"
+							@update:model-value="WebApp.HapticFeedback.impactOccurred('soft')"
 							@cancel="showCatPicker = false" />
 					</van-popup>
 				</van-cell-group>
