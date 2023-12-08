@@ -250,7 +250,6 @@
 	}
 
 	.product-list {
-		/* padding: 16px; */
 		padding-top: 80px;
 		padding-bottom: 8px;
 		transition: all 0.3s ease-out;
