@@ -17,7 +17,7 @@ export default defineConfig({
 			resolvers: [VantResolver()],
 		}),
 	],
-	base: "/tgminimarket",
+	// base: import.meta.env.MODE == "production" ? "/tgminimarket" : "",
 	resolve: {
 		alias: {
 			"@": fileURLToPath(new URL("./src", import.meta.url)),

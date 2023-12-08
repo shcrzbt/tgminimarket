@@ -2,6 +2,7 @@
 	import { Card, Grid, GridItem, Image, closeNotify, showNotify } from "vant"
 	import {onBeforeMount, ref, computed, reactive} from 'vue'
 	import axios from "@/plugins/axios";
+	import WebApp from '@twa-dev/sdk'
 
 	const products = ref([])
 	const loading = ref(false)
@@ -83,6 +84,8 @@
 	onBeforeMount(async () => {
 		await getProductList();
 		await getCategoriesList();
+		WebApp.ready();
+		WebApp.expand();
 	});
 </script>
 <template>
@@ -230,7 +233,7 @@
 		transition: all 0.3s ease-out;
 	}
 	.slide-fade-leave-active {
-		transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+		transition: all 0.3s ease-out;
 	}
 
 	.slide-fade-enter-from,
