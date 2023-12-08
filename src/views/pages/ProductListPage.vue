@@ -72,7 +72,7 @@
 		loading.value = true
 		let categoryQuery = '';
 
-		if (filters.category)
+		if (filters.category && filters.category !== 'all')
 			categoryQuery = `/category/${filters.category}`
 
 		await axios.get(`https://fakestoreapi.com/products${categoryQuery}`).then(({data}) => {
