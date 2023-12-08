@@ -19,7 +19,14 @@
 		return  searchFilter && priceFilter && (categories ? categories : true)
 	}))
 
-	const showActionButton = computed(()=> Object.keys(selectedProductIds.value).length)
+	const showActionButton = computed(()=>  {
+
+		if (Object.keys(selectedProductIds.value).length)
+			WebApp.MainButton.show()
+		else WebApp.MainButton.hide()
+
+		return Object.keys(selectedProductIds.value).length
+	})
 	const selectedProductsCount = computed(()=> {
 		let prodCount = 0
 		for (const i in selectedProductIds.value) {
@@ -28,6 +35,8 @@
 				prodCount = prodCount+prod
 			}
 		}
+
+		WebApp.MainButton.setText(`Корзина (${prodCount})`)
 		return prodCount
 	})
 
@@ -180,7 +189,7 @@
 				</van-grid>
 			</Transition>
 		</div>
-		<Transition name="slide-fade">
+		<!-- <Transition name="slide-fade">
 			<div v-if="showActionButton" class="create-order-button">
 				<van-button
 					style="width: 100%; height: 60px; font-size: 16px"
@@ -190,13 +199,16 @@
 					>Корзина ({{ selectedProductsCount }})
 				</van-button>
 			</div>
-		</Transition>
-		<van-back-top
+		</Transition> -->
+		<van-back-top style="--van-back-top-background: var(--van-orange-dark)" right="5vw" bottom="2svh"
+			><van-icon name="arrow-up"
+		/></van-back-top>
+		<!-- <van-back-top
 			style="--van-back-top-background: var(--van-orange-dark)"
 			right="5vw"
 			:bottom="!showActionButton ? '2svh' : '66px'"
 			><van-icon name="arrow-up"
-		/></van-back-top>
+		/></van-back-top> -->
 	</div>
 </template>
 
@@ -263,9 +275,9 @@
 		padding-top: 80px;
 		padding-bottom: 8px;
 		transition: all 0.3s ease-out;
-		&.action-button-shown {
-			padding-bottom: 80px;
-		}
+		// &.action-button-shown {
+		// 	padding-bottom: 80px;
+		// }
 		.add-to-cart {
 			&-button {
 				width: calc(100% - 16px);
