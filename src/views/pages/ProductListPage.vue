@@ -20,13 +20,16 @@
 	}))
 
 	const showActionButton = computed(()=>  {
-
-		if (Object.keys(selectedProductIds.value).length)
+		if (Object.keys(selectedProductIds.value).length){
 			WebApp.MainButton.show()
+			WebApp.MainButton.setText('Корзина')
+		}
+
 		else WebApp.MainButton.hide()
 
 		return Object.keys(selectedProductIds.value).length
 	})
+
 	const selectedProductsCount = computed(()=> {
 		let prodCount = 0
 		for (const i in selectedProductIds.value) {
@@ -169,6 +172,7 @@
 							{{ product.title }}
 						</p>
 						<span style="display: none">{{ selectedProductIds }}</span>
+						<span style="display: none">{{ selectedProductsCount }}</span>
 						<van-button
 							v-if="!selectedProductIds.hasOwnProperty(product.id)"
 							class="add-to-cart-button"
