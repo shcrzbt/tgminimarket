@@ -36,8 +36,12 @@
 		const searchFilter = el.title.toLocaleLowerCase().includes(filters.search.toLocaleLowerCase())
 		const priceFilter = el.price > filters.price[0] && el.price < filters.price[1]
 		return searchFilter && priceFilter
-	})
-	}
+	})}
+	const searchProducts = () => {
+		productsFiltered.value = products.value.filter((el)=> {
+		const searchFilter = el.title.toLocaleLowerCase().includes(filters.search.toLocaleLowerCase())
+		return searchFilter
+	})}
 	const filters = reactive({
 		search: '',
 		category: null,
@@ -127,7 +131,11 @@
 				</div>
 			</van-form>
 		</van-popup>
-		<van-search v-model="filters.search" show-action placeholder="Введите название товара">
+		<van-search
+			v-model="filters.search"
+			@update:model-value="searchProducts"
+			show-action
+			placeholder="Введите название товара">
 			<template #action>
 				<van-button
 					style="border-radius: 8px"
