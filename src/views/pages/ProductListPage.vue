@@ -18,7 +18,6 @@
 		return  searchFilter && priceFilter && (categories ? categories : true)
 	}))
 
-
 	const showActionButton = computed(()=> Object.keys(selectedProductIds.value).length)
 	const selectedProductsCount = computed(()=> {
 		let prodCount = 0
