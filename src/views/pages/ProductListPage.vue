@@ -38,7 +38,7 @@
 				prodCount = prodCount+prod
 			}
 		}
-
+		WebApp.HapticFeedback.impactOccurred("heavy")
 		WebApp.MainButton.setText(`Корзина (${prodCount})`)
 		return prodCount
 	})
