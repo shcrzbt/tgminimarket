@@ -17,6 +17,7 @@ export default defineConfig({
 			resolvers: [VantResolver()],
 		}),
 	],
+	base: "/tgminimarket",
 	resolve: {
 		alias: {
 			"@": fileURLToPath(new URL("./src", import.meta.url)),
