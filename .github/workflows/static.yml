@@ -24,20 +24,17 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v3
 
-            - name: Setup pnpm
-              uses: pnpm/action-setup@v2
-              with:
-                  version: 8
             - name: Setup Node
               uses: actions/setup-node@v3
               with:
                   node-version: "18"
-                  cache: "pnpm"
+                  cache: "npm"
+
             - name: Install dependencies
-              run: pnpm install --frozen-lockfile
+              run: npm install
 
             - name: Build project
-              run: pnpm build
+              run: npm build
 
             - name: Zip dist directory
               run: zip -r dist.zip dist/*
