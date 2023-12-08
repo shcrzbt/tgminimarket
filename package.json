@@ -1,0 +1,29 @@
+{
+	"name": "telegram-web-app",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"dev": "vite",
+		"dev-host": "vite --host",
+		"build": "vite build",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"@twa-dev/sdk": "^6.9.1",
+		"@vant/auto-import-resolver": "^1.0.2",
+		"@vitejs/plugin-basic-ssl": "^1.0.2",
+		"axios": "^1.6.2",
+		"pinia": "^2.1.7",
+		"sass": "^1.69.5",
+		"sass-loader": "^13.3.2",
+		"unplugin-vue-components": "^0.25.2",
+		"vant": "^4.8.0",
+		"vue": "^3.3.4",
+		"vue-router": "^4.2.5"
+	},
+	"devDependencies": {
+		"@vitejs/plugin-vue": "^4.4.0",
+		"@vitejs/plugin-vue-jsx": "^3.0.2",
+		"vite": "^4.4.11"
+	}
+}
