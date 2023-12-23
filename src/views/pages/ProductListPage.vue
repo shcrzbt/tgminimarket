@@ -75,9 +75,9 @@
 		if (filters.category && filters.category !== 'all')
 			categoryQuery = `/category/${filters.category}`
 
-		await axios.get(`https://fakestoreapi.com/products${categoryQuery}`).then(({data}) => {
-			products.value = data
-			productsFiltered.value = data
+		await axios.get(`products`).then(({data}) => {
+			products.value = data.results
+			productsFiltered.value = data.results
 		}).finally(()=> {
 			setTimeout(()=> loading.value = false,1000)
 
@@ -176,16 +176,16 @@
 		<div class="product-list" :class="{ 'action-button-shown': showActionButton }">
 			<div class="filters"></div>
 			<div v-if="loading" class="loading-wrapper"><van-loading size="24px">Загрузка...</van-loading></div>
-			<Transition v-else name="slide-fade">
+      <Transition v-if="!loading && products.length" name="slide-fade">
 				<van-grid :gutter="12" :column-num="2">
-					<van-grid-item v-for="product in productsFiltered">
-						<van-image :src="product.image" />
+					<van-grid-item v-for="product in products">
+						<van-image :src="product?.image1" />
 						<div class="tag-n-price">
-							<div class="tag">{{ product.category }}</div>
+							<div class="tag">{{ product?.category }}</div>
 							<div class="price">{{ product.price }}$</div>
 						</div>
 						<p>
-							{{ product.title }}
+							{{ product.name }}
 						</p>
 						<span style="display: none">{{ selectedProductIds }}</span>
 						<span style="display: none">{{ selectedProductsCount }}</span>

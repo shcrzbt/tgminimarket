@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const config = {
-	baseURL: import.meta.env.VITE_BASE_URL,
+	baseURL: import.meta.env.VITE_BASE_URL+"api/v1/",
 	// headers: {
 	// 	"access-control-allow-methods": "GET, PUT, POST, DELETE, OPTIONS, POST, GET, OPTIONS, DELETE, PUT, PATCH",
 	// 	// accept: "*/*",
