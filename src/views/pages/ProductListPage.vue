@@ -14,7 +14,7 @@
 
 	const categoriesComputed = computed(()=> categories.value.map((el)=> {
 		if (el === 'all') return {text: 'Все', value:'all'}
-		return {text: el, value:el}
+		return {text: el.name, value:el.id}
 	}))
 
 	const showActionButton = computed(()=>  {
@@ -63,7 +63,7 @@
 	})
 
 	const getCategoriesList = async () => {
-		await axios.get("https://fakestoreapi.com/products/categories").then(({data}) => {
+		await axios.get("categories").then(({data}) => {
 			categories.value = ['all', ...data]
 		});
 	};
@@ -73,9 +73,9 @@
 		let categoryQuery = '';
 
 		if (filters.category && filters.category !== 'all')
-			categoryQuery = `/category/${filters.category}`
+			categoryQuery = `?category_id=${filters.category}`
 
-		await axios.get(`products`).then(({data}) => {
+		await axios.get(`products${categoryQuery}`).then(({data}) => {
 			products.value = data.results
 			productsFiltered.value = data.results
 		}).finally(()=> {
@@ -145,7 +145,7 @@
 							:columns="categoriesComputed"
 							@confirm="
 								({ selectedOptions }) => {
-									filters.category = selectedOptions[0]?.text;
+									filters.category = selectedOptions[0]?.value;
 									showCatPicker = false;
 								}
 							"
@@ -178,14 +178,14 @@
 			<div v-if="loading" class="loading-wrapper"><van-loading size="24px">Загрузка...</van-loading></div>
       <Transition v-if="!loading && products.length" name="slide-fade">
 				<van-grid :gutter="12" :column-num="2">
-					<van-grid-item v-for="product in products">
+					<van-grid-item v-for="product in productsFiltered">
 						<van-image :src="product?.image1" />
 						<div class="tag-n-price">
-							<div class="tag">{{ product?.category }}</div>
+							<div class="tag">{{ product?.category_name }}</div>
 							<div class="price">{{ product.price }}$</div>
 						</div>
 						<p>
-							{{ product.name }}
+              {{product.brand_name}} {{ product.name }}
 						</p>
 						<span style="display: none">{{ selectedProductIds }}</span>
 						<span style="display: none">{{ selectedProductsCount }}</span>
