@@ -185,7 +185,7 @@
 							<div class="price">{{ product.price }}$</div>
 						</div>
 						<p>
-              {{product.brand_name}} {{ product.name }}
+              {{ product.name }}
 						</p>
 						<span style="display: none">{{ selectedProductIds }}</span>
 						<span style="display: none">{{ selectedProductsCount }}</span>
