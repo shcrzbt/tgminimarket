@@ -7,7 +7,21 @@ const theme = ref('light')
 
 onMounted(()=> {
 	theme.value = WebApp.colorScheme
+
+	WebApp.onEvent('themeChanged', ()=> {
+		theme.value = WebApp.colorScheme
+	})
+
+	WebApp.onEvent('popupClosed', (e)=> {
+		e.preventDefault()
+		let isBoss = confirm("Вы уверены, что хотите закрыть?");
+
+
+		if (isBoss) WebApp.close()
+	})
+
 })
+
 </script>
 
 <template>
