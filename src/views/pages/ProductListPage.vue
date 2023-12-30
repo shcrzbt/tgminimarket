@@ -1,10 +1,9 @@
 <script setup lang="js">
-	import { Card, Grid, GridItem, Image, closeNotify, showNotify } from "vant"
-	import {onBeforeMount, ref, computed, reactive} from 'vue'
-	import axios from "@/plugins/axios";
-	import WebApp from '@twa-dev/sdk'
+import { computed, onBeforeMount, reactive, ref } from "vue"
+import axios from "@/plugins/axios"
+import WebApp from "@twa-dev/sdk"
 
-	const products = ref([])
+const products = ref([])
 	const loading = ref(false)
 	const productsFiltered = ref([])
 	const categories = ref([])
@@ -57,7 +56,7 @@
 
 	const filters = reactive({
 		search: '',
-		category: null,
+		category: [],
 		price: [0, 1000]
 
 	})
