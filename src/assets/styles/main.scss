@@ -1,0 +1,19 @@
+/*Обнуление*/
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-family: 'SF Pro Display', sans-serif;
+  box-sizing: border-box;
+
+  &:before,
+  &:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+}
+
+body {
+  background-color: var(--bg-secondary-3);
+}

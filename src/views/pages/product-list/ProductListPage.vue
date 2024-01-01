@@ -1,8 +1,13 @@
 <script setup lang="js">
 import usePage from "./UsePage"
-import ProductListFilter from "@/components/ProductListFilter.vue"
 import ProductItem from "@/components/ProductItem.vue"
 import BackToTop from "@/components/BackToTop.vue"
+import ProductListCategories from "@/components/ProductListCategories.vue"
+import ProductListCategoryTags from "@/components/ProductListCategoryTags.vue"
+import { useWindowScroll } from "@vueuse/core"
+import ProductListSearch from "@/components/ProductListSearch.vue"
+
+const { x, y } = useWindowScroll()
 
 const {
 	loading,
@@ -13,6 +18,7 @@ const {
 	showCatPicker,
 	onListLoad,
 	searchProducts,
+	onCategoryFilter,
 	loadFinished,
 	onSubmitFilter
 } = usePage()
@@ -22,75 +28,62 @@ const cartHidden = true
 </script>
 
 <template>
-	<div>
-		<ProductListFilter v-model:search="filters.search" v-model:price="filters.price" v-model:category="filters.category"
+	<div class="product-list-page">
+		<transition name="van-slide-down">
+			<product-list-category-tags v-if="y > 180"  v-model:category="filters.category" @update:category="onCategoryFilter" />
+		</transition>
+
+		<ProductListSearch v-model:search="filters.search" v-model:price="filters.price" v-model:category="filters.category"
 											 @filter="onSubmitFilter" @search-products="searchProducts" />
 
+		<div class="product-list-page__body">
 
-		<div v-if="!products.length && loading" class="loading-wrapper">
-			<van-loading size="24px">Загрузка...</van-loading>
+			<ProductListCategories v-model:category="filters.category" @update:category="onCategoryFilter" />
+
+			<!--			<div v-if="!products.length && loading" class="loading-wrapper">-->
+			<!--				<van-loading size="24px">Загрузка...</van-loading>-->
+			<!--			</div>-->
+			<van-list
+				v-model:loading="loading"
+				:finished="loadFinished"
+				finished-text="Вы посмотрели все..."
+				@load="onListLoad"
+				style="width:100%"
+			>
+				<!--			<div class="product-list" :class="{ 'action-button-shown': showActionButton }">-->
+				<div class="product-list">
+					<div class="filters"></div>
+
+
+					<van-grid :gutter="12" :column-num="2">
+						<product-item v-for="(product, index) in products" :key="product.id+'prod'" :product="product"
+													:index="index" />
+					</van-grid>
+				</div>
+			</van-list>
+
 		</div>
-
-		<van-list
-			v-model:loading="loading"
-			:finished="loadFinished"
-			finished-text="Вы посмотрели все..."
-			@load="onListLoad"
-		>
-
-<!--			<div class="product-list" :class="{ 'action-button-shown': showActionButton }">-->
-			<div class="product-list" :class="{ 'action-button-shown': showActionButton }">
-				<div class="filters"></div>
-
-
-				<van-grid :gutter="12" :column-num="2">
-					<product-item v-for="(product, index) in products" :key="product.id+'prod'" :product="product" :index="index" />
-				</van-grid>
-			</div>
-		</van-list>
-
-
 		<back-to-top />
 
 	</div>
 </template>
 
 <style lang="scss">
+.product-list-page {
+	width: 100%;
 
-.loading-wrapper {
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
+	&__body {
+		@include flex(.8rem, column, start, start);
 
-.van-slider__button {
-	position: relative;
-
-	&::after {
-		content: attr(data-value);
-		position: absolute;
-		top: -30%;
-		padding: 0 8px;
-		line-height: normal;
-		background-color: #7a7a7a71;
-		border-radius: 16px;
-		box-shadow: var(--van-slider-button-shadow);
+		width: 100%;
+		padding: 8px 0 8px 0;
 	}
 }
 
-.slide-fade-enter-active {
-	transition: all 0.3s ease-out;
-}
+.loading-wrapper {
+	@include flex(0, row, center, center);
 
-.slide-fade-leave-active {
-	transition: all 0.3s ease-out;
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-	transform: translateY(30px);
-	opacity: 0;
+	height: 100%;
 }
 
 :root {
@@ -99,28 +92,19 @@ const cartHidden = true
 	--van-search-input-height: 44px !important;
 }
 
-.van-search__action {
-	line-height: normal !important;
-}
 
 .product-list {
-	padding-top: 80px;
-	padding-bottom: 8px;
 	transition: all 0.3s ease-out;
 
 	.van-grid-item__content {
-		background-color: var(--van-search-content-background);
-		justify-content: start;
-		border-radius: 12px !important;
-		gap: 8px;
-		padding-top: 8px;
-		align-items: start;
+		@include flex(.8rem, column, start, start);
+		background-color: transparent;
+		padding: 0;
 		position: relative;
-		padding-bottom: 8px;
-		box-shadow: var(--van-calendar-header-shadow);
+
 
 		&:after {
-			border-radius: 26px !important;
+			display: none;
 		}
 	}
 }

@@ -1,6 +1,6 @@
 <script setup lang="js">
 
-defineProps(["product","index"])
+defineProps(["product", "index"])
 const emit = defineEmits(["update:search", "cart"])
 
 
@@ -13,15 +13,23 @@ const emit = defineEmits(["update:search", "cart"])
 		<div class="product-item">
 			<div class="product-item__image">
 				<van-image :src="product?.image1" />
+				<div class="tag-new">
+					Новинка
+				</div>
 				<div class="tags">
-					<van-tag mark type="warning">Скидка</van-tag>
+					<div class="tag">
+						% Скидка
+					</div>
+
 				</div>
 			</div>
 			<div class="product-item__details">
 				<p>{{ product.name }}</p>
 				<div class="tag-n-price">
-					<!--				<div class="tag">{{ product?.category_name }}</div>-->
-					<div class="price">{{ product.price }}$  <del>{{ product.price + (Number(product.price)*0.15) }}$</del></div>
+
+					<div class="price">${{ product.price.toFixed(2) }}
+						<del>${{ (product.price + (Number(product.price) * 0.15)).toFixed(2) }}</del>
+					</div>
 				</div>
 			</div>
 
@@ -49,22 +57,92 @@ const emit = defineEmits(["update:search", "cart"])
 
 <style lang="scss" scoped>
 .product-item {
+	@include flex(1.2rem, column, space-between, start);
 	width: 100%;
 	height: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: start;
-	justify-content: space-between;
-	gap: 8px;
 
 	&__image {
 		width: 100%;
-		height: 8rem;
+		height: 16.2rem;
 		position: relative;
+		background-color: var(--bg-primary);
+		border-radius: 1.6rem;
+		overflow: hidden;
+		.tag-new {
+			position: absolute;
+			top: 1.8rem;
+			right: 0;
+			transform-origin: center;
+			transform: rotate(45deg) scale(.7);
+			padding: .4rem .8rem;
+			background-color: var(--red);
+			color: var(--bg-primary);
+			border-radius: .8rem;
+		}
 		.tags {
 			position: absolute;
-			bottom: 8px;
-			left: 0;
+			bottom: .8rem;
+			left: .8rem;
+
+			.tag {
+				padding: .4rem .8rem;
+				background-color: var(--main-secondary);
+				color: var(--bg-primary);
+				border-radius: .8rem;
+			}
+
+		}
+	}
+
+
+	&__details {
+		@include flex(.8rem, column, space-between, start);
+
+		padding: 0 4px;
+		flex-grow: 1;
+		margin-bottom: .8rem;
+		p {
+
+			@include getFont('p3');
+			font-weight: 600;
+			text-align: left;
+		}
+	}
+
+	.tag-n-price {
+		@include flex(.8rem, row, space-between, center);
+
+		width: 100%;
+		flex-wrap: wrap;
+
+		.price {
+			@include getFont('c-bold');
+
+			display: flex;
+			align-items: flex-end;
+			text-transform: uppercase;
+			font-size: 16px;
+			font-weight: 700;
+			color: var(--gs-100);
+
+			del {
+				font-weight: 500;
+				font-size: 14px;
+				color: var(--van-gray-5);
+				margin-left: 8px;
+			}
+		}
+	}
+
+
+	:deep(.van-image) {
+		width: 100%;
+		height: 100%;
+		border-radius: 8px !important;
+		overflow: hidden;
+
+		img {
+			object-fit: contain;
 		}
 	}
 
@@ -85,71 +163,6 @@ const emit = defineEmits(["update:search", "cart"])
 	//		justify-content: center;
 	//	}
 	//}
-	&__details{
-		padding: 0 4px;
-		display: flex;
-		flex-direction: column;
-		align-items: start;
-		justify-content: space-between;
-		gap: 8px;
-		flex-grow: 1;
-		p {
-			font-weight: 600;
-			text-align: left;
-			//word-break: break-all;
-		}
-	}
-	.tag-n-price {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 8px;
-		width: 100%;
-		flex-wrap: wrap;
-
-		.tag {
-			display: flex;
-			align-items: center;
-			text-transform: uppercase;
-			background-color: var(--van-orange-dark);
-			color: #fff;
-			padding: 4px 8px;
-			border-radius: 4px;
-			line-height: 12px !important;
-			font-size: 12px;
-			font-weight: 700;
-		}
-
-		.price {
-			display: flex;
-			align-items: flex-end;
-			text-transform: uppercase;
-			font-size: 16px;
-			font-weight: 700;
-			color: var(--van-blue);
-			del {
-				font-weight: 500;
-				font-size: 14px;
-				color: var(--van-gray-5);
-				margin-left: 8px;
-			}
-		}
-	}
-
-
-	:deep(.van-image) {
-		width: 100%;
-		height: 100%;
-		background-color: #fff;
-		border-radius: 8px !important;
-		overflow: hidden;
-		padding: 1em;
-
-		img {
-			object-fit: contain;
-		}
-	}
-
 
 }
 </style>

@@ -1,6 +1,7 @@
 import { computed, onBeforeMount, reactive, ref } from "vue"
 import WebApp from "@twa-dev/sdk"
 import axios from "@/plugins/axios"
+import { useDebounceFn } from "@vueuse/core"
 
 export default function() {
 
@@ -84,8 +85,13 @@ export default function() {
 
 	const onSubmitFilter = async () => {
 		popupModel.value = false
-		await getProductList()
+
+			await getProductList()
 	}
+
+	const onCategoryFilter = useDebounceFn(async () => {
+		await getProductList()
+	}, 500)
 
 	const onAddToCart = (id, productName) => {
 		Object.assign(selectedProductIds.value, id)
@@ -114,6 +120,7 @@ export default function() {
 		products,
 		filters,
 		loadFinished,
+		onCategoryFilter,
 		onListLoad,
 		searchProducts,
 		onSubmitFilter

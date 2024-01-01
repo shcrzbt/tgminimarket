@@ -1,0 +1,73 @@
+@use "sass:map";
+@use "variables" as *;
+
+@mixin getFont($font-type: "p3") {
+  font-style: map-get($font-sizes, $font-type, "style") !important;
+  font-weight: map-get($font-sizes, $font-type, "weight") !important;
+  font-size: map-get($font-sizes, $font-type, "size") !important;
+  line-height: map-get($font-sizes, $font-type, "lheight");
+  text-transform: map-get($font-sizes, $font-type, "transform") !important;
+  letter-spacing: map-get($font-sizes, $font-type, "lspacing") !important;
+  @content;
+}
+
+@mixin no-selection() {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  @content;
+}
+
+@mixin font($fsize: 1rem, $fweight: 500, $lheight: 1rem) {
+  font-size: $fsize;
+  font-weight: $fweight !important;
+  line-height: $lheight;
+  @content;
+}
+
+@mixin flex($fgap: 0 0,
+  $direction: row,
+  $justify: start,
+  $align: center,
+  $isImportant: false) {
+  @if $isImportant ==true {
+
+    display: flex !important;
+    flex-direction: $direction !important;
+    justify-content: $justify !important;
+    align-items: $align !important;
+    gap: $fgap !important;
+
+  } @else {
+
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+    gap: $fgap;
+
+  }
+
+  @content;
+}
+
+@mixin useMediaQuery($grid-breakpoints, $breakpoint) {
+  @media (max-width: map-get($grid-breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+@mixin animation($name, $duration, $timing-function, $delay) {
+  animation-name: $name;
+  animation-duration: $duration;
+  animation-timing-function: $timing-function;
+  animation-delay: $delay;
+  animation-fill-mode: both;
+}
+
+@function HexToRGB($hex) {
+  @return red($hex), green($hex), blue($hex);
+}

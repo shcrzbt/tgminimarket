@@ -76,16 +76,18 @@ const updateCategory = (val) => emit("update:category", val)
 
 <style lang="scss">
 .van-search {
-	--van-search-input-height: 4.5rem;
 	--van-search-content-background: var(--bg-primary);
-
+	--van-search-input-height: 5rem;
+	--van-radius-sm: 1.2rem ;
 	//position: fixed;
 	//top: 0;
 	//left: 0;
 	//z-index: 9;
 	//box-shadow: var(--van-calendar-header-shadow);
 	background-color: transparent;
+
 	width: 100%;
+
 }
 
 .van-slider__button {

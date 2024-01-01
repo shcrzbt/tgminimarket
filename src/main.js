@@ -1,12 +1,12 @@
-import "./assets/main.css";
-import "vant/lib/index.css";
-import { createApp } from "vue";
-import { createPinia } from "pinia";
-import { Locale } from "vant";
-import ruRU from "vant/es/locale/lang/ru-RU";
+import "vant/lib/index.css"
+import "./assets/styles/main.scss"
+import { createApp } from "vue"
+import { createPinia } from "pinia"
+import { Locale } from "vant"
+import ruRU from "vant/es/locale/lang/ru-RU"
 
-import App from "./App.vue";
-import router from "./router";
+import App from "./App.vue"
+import router from "./router"
 
 const app = createApp(App);
 

@@ -1,0 +1,226 @@
+:root {
+  font-size: 10px;
+
+  --theme-color: "light";
+
+  // DEFAULT THEME -------------------------------------------
+
+  // ___main-colors
+  --main-primary: #C3E703;
+  --main-secondary: #96D1C7;
+
+  --blue: #0085ff;
+  --green: #00ba34;
+  --orange: #f98600;
+  --red: #FF410A;
+  --red-l60: #f6abab;
+
+  --gs-100: #1c1c1c;
+  --gs-200: #585757;
+  --gs-300: #969696;
+  --gs-400: #e8e8e8;
+
+
+  // ___bg-colors
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7f7f7;
+  --bg-secondary-2: #F0F1F2;
+  --bg-secondary-3: #F6F6F6;
+  --bg-blue: #eeefff;
+  --bg-green: #e6f9eb;
+  --bg-orange: #fff5e9;
+  --bg-red: #ffecec;
+
+  // ___shadows
+  --shadow-2: 0px 1px 1px 0px rgba(0, 0, 0, 0.08),
+  0px 2px 1px 0px rgba(0, 0, 0, 0.06), 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  --shadow-3: 0px 6px 10px 0px rgba(0, 0, 0, 0.08),
+  0px 1px 18px 0px rgba(0, 0, 0, 0.06), 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
+  --shadow-4: 0px 24px 38px 0px rgba(0, 0, 0, 0.04),
+  0px 9px 46px 0px rgba(0, 0, 0, 0.06), 0px 11px 15px 0px rgba(0, 0, 0, 0.1);
+  --inner-shadow-1: 0px 1px 1px 0px rgba(0, 0, 0, 0.06) inset;
+  --inner-shadow-2: 0px 1px 1px 0px rgba(0, 0, 0, 0.08) inset,
+  0px 2px 1px 0px rgba(0, 0, 0, 0.06) inset,
+  0px 1px 3px 0px rgba(0, 0, 0, 0.1) inset;
+
+}
+
+$colors: (
+        "primary": --primary,
+        "blue": --blue,
+        "green": --green,
+        "orange": --orange,
+        "red": --red,
+);
+
+$color-shades: (
+        "20": 0.2,
+        "40": 0.4,
+        "60": 0.6,
+);
+
+$font-sizes: (
+        "display": (
+                "style": normal,
+                "weight": 500,
+                "size": 64px,
+                "lheight": 80px,
+                "transform": unset,
+                "lspacing": unset,
+        ),
+        "h1": (
+                "style": normal,
+                "weight": 500,
+                "size": 48px,
+                "lheight": 60px,
+                "transform": unset,
+                "lspacing": unset,
+        ),
+        "h2": (
+                "style": normal,
+                "weight": 500,
+                "size": 36px,
+                "lheight": 48px,
+                "transform": unset,
+                "lspacing": unset,
+        ),
+        "h3": (
+                "style": normal,
+                "weight": 500,
+                "size": 24px,
+                "lheight": 32px,
+                "transform": unset,
+                "lspacing": unset,
+        ),
+        "h4": (
+                "style": normal,
+                "weight": 500,
+                "size": 20px,
+                "lheight": 28px,
+                "transform": unset,
+                "lspacing": unset,
+        ),
+        "h5": (
+                "style": normal,
+                "weight": 500,
+                "size": 16px,
+                "lheight": 24px,
+                "transform": unset,
+                "lspacing": unset,
+        ),
+        "h6": (
+                "style": normal,
+                "weight": 500,
+                "size": 13px,
+                "lheight": 20px,
+                "transform": unset,
+                "lspacing": unset,
+        ),
+        "c-bold": (
+                "style": normal,
+                "weight": 600,
+                "size": 18px,
+                "lheight": 20px,
+                "transform": uppercase,
+                "lspacing": 0.04em,
+        ),
+        "c1-bold": (
+                "style": normal,
+                "weight": 600,
+                "size": 14px,
+                "lheight": 20px,
+                "transform": uppercase,
+                "lspacing": 0.04em,
+        ),
+        "c1-reg": (
+                "style": normal,
+                "weight": 400,
+                "size": 14px,
+                "lheight": 20px,
+                "transform": uppercase,
+                "lspacing": 0.04em,
+        ),
+        "c2-bold": (
+                "style": normal,
+                "weight": 600,
+                "size": 12px,
+                "lheight": 16px,
+                "transform": uppercase,
+                "lspacing": 0.04em,
+        ),
+        "c2-reg": (
+                "style": normal,
+                "weight": 400,
+                "size": 12px,
+                "lheight": 16px,
+                "transform": uppercase,
+                "lspacing": 0.04em,
+        ),
+        "c3-bold": (
+                "style": normal,
+                "weight": 600,
+                "size": 10px,
+                "lheight": 16px,
+                "transform": uppercase,
+                "lspacing": 0.04em,
+        ),
+        "c3-reg": (
+                "style": normal,
+                "weight": 400,
+                "size": 10px,
+                "lheight": 16px,
+                "transform": uppercase,
+                "lspacing": 0.04em,
+        ),
+        "p1": (
+                "style": normal,
+                "weight": 500,
+                "size": 20px,
+                "lheight": 28px,
+                "transform": unset,
+                "lspacing": unset,
+        ),
+        "p2": (
+                "style": normal,
+                "weight": 500,
+                "size": 16px,
+                "lheight": 24px,
+                "transform": unset,
+                "lspacing": unset,
+        ),
+        "p3": (
+                "style": normal,
+                "weight": 500,
+                "size": 14px,
+                "lheight": 20px,
+                "transform": unset,
+                "lspacing": unset,
+        ),
+        "p4": (
+                "style": normal,
+                "weight": 500,
+                "size": 12px,
+                "lheight": 20px,
+                "transform": unset,
+                "lspacing": unset,
+        ),
+);
+
+$grid-breakpoints: (
+        xxs: 0,
+        xs: 330px,
+        sm: 540px,
+        md: 720px,
+        lg: 1092px,
+        xl: 1280px,
+        xxl: 1440px,
+        xlg: 1660px,
+);
+
+$column-map: (
+        sm: 2,
+        md: 3,
+        lg: 4,
+        xl: 4,
+        2xl: 4,
+);
