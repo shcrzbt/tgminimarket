@@ -20,7 +20,10 @@ const updatePrice = (val) => {
 	WebApp.HapticFeedback.impactOccurred("soft")
 	emit("update:price", val)
 }
-const updateCategory = (val) => emit("update:category", val)
+const updateCategory = (val) => {
+	emit("update:category", val);
+	emit("filter")
+}
 
 
 </script>
@@ -28,33 +31,12 @@ const updateCategory = (val) => emit("update:category", val)
 
 <template>
 	<div>
-		<van-popup v-model:show="popupModel" closeable position="bottom" :style="{ padding: '8px 0 8px 0' }">
-			<van-form @submit="onSubmitFilter">
-				<van-cell-group v-if="false" inset title="Цена ($)">
-					<van-cell title="От" :value="price[0] + ' $'" />
-					<van-cell title="До" :value="price[1] + ' $'" />
+		<van-popup class="filter-popup" v-model:show="popupModel" closeable position="bottom" :style="{ padding: '0 0 8px 0' }">
+			<van-cell-group title="Категории">
+				<product-list-categories :cell="true" :category="category" @update:category="updateCategory" />
+			</van-cell-group>
 
-					<van-field>
-						<template #input>
-							<van-slider
-								range
-								:step="10"
-								:min="0"
-								:max="1000"
-								:model-value="price"
-								@update:model-value="updatePrice" />
-						</template>
-					</van-field>
-				</van-cell-group>
-
-<!--				<categories-filter :category="category" @update:category="updateCategory" />-->
-				<van-cell-group title="Категории">
-
-				<product-list-categories :cell="true" :category="category" @update:category="updateCategory"/>
-				</van-cell-group>
-
-				<van-button style="margin: 16px; width: calc(100% - 3.2rem)" round block type="primary" native-type="submit"> Показать</van-button>
-			</van-form>
+			<!--				<van-button style="margin: 16px; width: calc(100% - 3.2rem)" round block type="primary" native-type="submit"> Показать</van-button>-->
 		</van-popup>
 
 		<van-search
@@ -75,10 +57,19 @@ const updateCategory = (val) => emit("update:category", val)
 </template>
 
 <style lang="scss">
+.filter-popup {
+	--van-popup-close-icon-margin: 1.9rem;
+
+	.van-cell-group__title {
+		@include getFont('h4');
+		color: var(--gs-100);
+		font-weight: 700 !important;
+	}
+}
 .van-search {
 	--van-search-content-background: var(--bg-primary);
 	--van-search-input-height: 5rem;
-	--van-radius-sm: 1.2rem ;
+	--van-radius-sm: 1.2rem;
 	//position: fixed;
 	//top: 0;
 	//left: 0;
