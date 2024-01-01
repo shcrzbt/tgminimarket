@@ -59,7 +59,7 @@ onBeforeMount(async () => {
 		<van-checkbox-group v-model="catModel" @change="checkedResultChange">
 
 			<categories-item v-for="(cat, index) in categories" @click="onToggleCategories(index)"
-											 :checked="catModel.includes(cat.id)" :key="cat.id"
+											 :checked="catModel.includes(cat.id)" :key="cat.id" :cell="cell"
 											 :value="cat.id" :ref="el => checkboxRefs[index] = el" :label="cat.name" />
 			<!--					<van-checkbox-->
 			<!--						:name="cat.id"-->
@@ -79,7 +79,7 @@ onBeforeMount(async () => {
 		grid-template-columns: repeat(4, 1fr);
 		gap: .8rem;
 		width: 100%;
-		overflow-x: unset;
+		overflow: hidden;
 		flex-wrap: wrap;
 		padding: 8px;
 		clip-path: none;

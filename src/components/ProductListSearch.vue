@@ -59,7 +59,7 @@ const updateCategory = (val) => {
 <style lang="scss">
 .filter-popup {
 	--van-popup-close-icon-margin: 1.9rem;
-
+	max-width: 100%;
 	.van-cell-group__title {
 		@include getFont('h4');
 		color: var(--gs-100);
