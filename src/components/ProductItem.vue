@@ -12,7 +12,9 @@ const emit = defineEmits(["update:search", "cart"])
 
 		<div class="product-item">
 			<div class="product-item__image">
-				<van-image :src="product?.image1" />
+				<lazy-component>
+					<van-image lazy-load :src="product?.image1" v-lazy="product?.image1" />
+				</lazy-component>
 				<div class="tag-new">
 					Новинка
 				</div>
@@ -68,6 +70,7 @@ const emit = defineEmits(["update:search", "cart"])
 		background-color: var(--bg-primary);
 		border-radius: 1.6rem;
 		overflow: hidden;
+
 		.tag-new {
 			position: absolute;
 			top: 1.8rem;
@@ -79,6 +82,7 @@ const emit = defineEmits(["update:search", "cart"])
 			color: var(--bg-primary);
 			border-radius: .8rem;
 		}
+
 		.tags {
 			position: absolute;
 			bottom: .8rem;
@@ -101,6 +105,7 @@ const emit = defineEmits(["update:search", "cart"])
 		padding: 0 4px;
 		flex-grow: 1;
 		margin-bottom: .8rem;
+
 		p {
 
 			@include getFont('p3');

@@ -30,8 +30,12 @@ onMounted(() => {
 		<div class="category-item__icon"
 				 :style="{  color: CATEGORIES_UI_MAP[value].color }">
 <!--			<component :is="CATEGORIES_UI_MAP[value].icon" />-->
-			<img :src="CATEGORIES_UI_MAP[value].img" alt="" srcset="">
+			<lazy-component>
+				<img :src="CATEGORIES_UI_MAP[value].img" alt="" v-lazy="CATEGORIES_UI_MAP[value].img">
+			</lazy-component>
+
 		</div>
+
 		<div class="category-item__label " :class="{'category-item__label--checked': checked, 'van-ellipsis':!cell}">
 			{{ label }}
 		</div>

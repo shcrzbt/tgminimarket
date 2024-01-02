@@ -5,7 +5,6 @@ import { onMounted, ref } from "vue"
 const theme = ref('light')
 
 onMounted(()=> {
-	WebApp.themeVars.buttonColor = "#96D1C7"
 	// theme.value = WebApp.colorScheme
 	//
 	// WebApp.onEvent('themeChanged', ()=> {

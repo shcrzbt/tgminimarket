@@ -7,13 +7,9 @@ import CategoryTag from "@/components/Filters/CategoryTag.vue"
 defineProps(["category", "cell"])
 const emit = defineEmits(["update:category"])
 
-
 const categories = ref([])
 const catModel = ref([])
-
 const checkboxRefs = ref([])
-const isCheckAll = ref(false)
-const isIndeterminate = ref(false)
 
 const getCategoriesList = async () => {
 	await axios.get("categories").then(({ data }) => {
@@ -23,12 +19,6 @@ const getCategoriesList = async () => {
 	})
 }
 
-const checkedResultChange = (value) => {
-	const checkedCount = value.length
-	isCheckAll.value = checkedCount === categories.value.length
-	isIndeterminate.value = checkedCount > 0 && checkedCount < categories.value.length
-	updateCategory(value)
-}
 const updateCategory = (val) => {
 	emit("update:category", val)
 }
@@ -36,17 +26,7 @@ const updateCategory = (val) => {
 const onToggleCategories = (index) => {
 	checkboxRefs.value[index].toggleCheckbox()
 }
-const checkAllChange = (val) => {
-	let catlist = []
 
-	for (const catKey in categories.value) {
-		catlist.push(categories.value[catKey].id)
-	}
-
-	catModel.value = val ? catlist : []
-	isIndeterminate.value = false
-}
-const onCheckAllCellClick = () => isCheckAll.value = !isCheckAll.value
 
 onBeforeMount(async () => {
 	await getCategoriesList()
@@ -57,7 +37,7 @@ onBeforeMount(async () => {
 <template>
 
 	<div class="category-tags-list" :class="{'category-tags-list--reveal':cell, }">
-		<van-checkbox-group v-model="catModel" @change="checkedResultChange">
+		<van-checkbox-group v-model="catModel" @change="updateCategory">
 			<category-tag v-for="(cat, index) in categories" @click="onToggleCategories(index)"
 										:checked="catModel.includes(cat.id)" :key="cat.id"
 										:value="cat.id" :ref="el => checkboxRefs[index] = el" :label="cat.name" />
@@ -83,6 +63,7 @@ onBeforeMount(async () => {
 		max-width: 100%;
 		overflow-x: auto;
 		padding: .8rem 0;
+
 		&::-webkit-scrollbar {
 			display: none;
 		}

@@ -3,17 +3,12 @@ import { onBeforeMount, ref } from "vue"
 import axios from "@/plugins/axios"
 import CategoriesItem from "@/components/Filters/CategoriesItem.vue"
 
-
 defineProps(["category", "cell"])
 const emit = defineEmits(["update:category"])
 
-
 const categories = ref([])
 const catModel = ref([])
-
 const checkboxRefs = ref([])
-const isCheckAll = ref(false)
-const isIndeterminate = ref(false)
 
 const getCategoriesList = async () => {
 	await axios.get("categories").then(({ data }) => {
@@ -23,31 +18,12 @@ const getCategoriesList = async () => {
 	})
 }
 
-const checkedResultChange = (value) => {
-	const checkedCount = value.length
-	isCheckAll.value = checkedCount === categories.value.length
-	isIndeterminate.value = checkedCount > 0 && checkedCount < categories.value.length
-	updateCategory(value)
-}
 const updateCategory = (val) => {
 	emit("update:category", val)
 }
-
 const onToggleCategories = (index) => {
 	checkboxRefs.value[index].toggleCheckbox()
 }
-const checkAllChange = (val) => {
-	let catlist = []
-
-	for (const catKey in categories.value) {
-		catlist.push(categories.value[catKey].id)
-	}
-
-	catModel.value = val ? catlist : []
-	isIndeterminate.value = false
-}
-const onCheckAllCellClick = () => isCheckAll.value = !isCheckAll.value
-
 onBeforeMount(async () => {
 	await getCategoriesList()
 })
@@ -56,16 +32,11 @@ onBeforeMount(async () => {
 
 <template>
 	<div class="categories-list" :class="{'categories-list--cell':cell}">
-		<van-checkbox-group v-model="catModel" @change="checkedResultChange">
+		<van-checkbox-group v-model="catModel" @change="updateCategory">
 
 			<categories-item v-for="(cat, index) in categories" @click="onToggleCategories(index)"
 											 :checked="catModel.includes(cat.id)" :key="cat.id" :cell="cell"
 											 :value="cat.id" :ref="el => checkboxRefs[index] = el" :label="cat.name" />
-			<!--					<van-checkbox-->
-			<!--						:name="cat.id"-->
-			<!--						:ref="el => checkboxRefs[index] = el"-->
-			<!--						@click.stop-->
-			<!--					/>-->
 		</van-checkbox-group>
 	</div>
 </template>

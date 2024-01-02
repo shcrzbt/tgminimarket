@@ -14,6 +14,7 @@ export default function() {
 	const pagination = reactive({
 		page: 1
 	})
+	
 	const filters = reactive({
 		search: "", category: [], price: [0, 1000]
 
@@ -63,7 +64,6 @@ export default function() {
 			if (products.value.length) products.value = [...products.value, ...data.results]
 			else products.value = data.results
 
-
 		}).catch(err => {
 			loadFinished.value = true
 
@@ -74,22 +74,21 @@ export default function() {
 	}
 
 	const onListLoad = async () => {
-
 		if (!loadFinished.value) {
 			pagination.page += 1
 			await getProductList()
 		}
-
 
 	}
 
 	const onSubmitFilter = async () => {
 		popupModel.value = false
 
-			await getProductList()
+		await getProductList()
 	}
 
 	const onCategoryFilter = useDebounceFn(async () => {
+		if (!filters.category.length) return
 		await getProductList()
 	}, 500)
 
