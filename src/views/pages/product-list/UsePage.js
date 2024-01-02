@@ -14,10 +14,11 @@ export default function() {
 	const pagination = reactive({
 		page: 1
 	})
-	
-	const filters = reactive({
-		search: "", category: [], price: [0, 1000]
 
+	const filters = reactive({
+		search: "",
+		category: [],
+		price: [0, 1000]
 	})
 
 	const showActionButton = computed(() => {
@@ -28,6 +29,7 @@ export default function() {
 
 		return Object.keys(selectedProductIds.value).length
 	})
+
 	const selectedProductsCount = computed(() => {
 		let prodCount = 0
 		for (const i in selectedProductIds.value) {
