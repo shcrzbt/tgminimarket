@@ -1,10 +1,9 @@
 <script setup lang="js">
 import { onMounted, ref } from "vue"
-import { CATEGORIES_UI_MAP } from "@/utils/constants"
 import WebApp from "@twa-dev/sdk"
 
 
-const props = defineProps(["value", "checked", "label", "icon", "cell"])
+const props = defineProps(["value", "checked", "image", "label", "icon", "cell"])
 // const emit = defineEmits(["update:category"])
 const chbxRef = ref(null)
 
@@ -26,17 +25,15 @@ onMounted(() => {
 
 
 <template>
-	<div class="category-item" :class="{'category-item--checked': checked, 'category-item--cell':cell}">
-		<div class="category-item__icon"
-				 :style="{  color: CATEGORIES_UI_MAP[value].color }">
-<!--			<component :is="CATEGORIES_UI_MAP[value].icon" />-->
-			<lazy-component>
-				<img :src="CATEGORIES_UI_MAP[value].img" alt="" v-lazy="CATEGORIES_UI_MAP[value].img">
-			</lazy-component>
+	<div class="category-item" :class="{'category-item--checked': checked, 'category-item--cell': cell}">
+		<div class="category-item__icon">
 
+			<lazy-component>
+				<img :src="image" alt="" v-lazy="image">
+			</lazy-component>
 		</div>
 
-		<div class="category-item__label " :class="{'category-item__label--checked': checked, 'van-ellipsis':!cell}">
+		<div class="category-item__label " :class="{'category-item__label--checked': checked, 'van-ellipsis': !cell}">
 			{{ label }}
 		</div>
 		<van-checkbox
@@ -64,6 +61,7 @@ onMounted(() => {
 		.category-item__label {
 			padding: 0;
 			text-align: center;
+
 			&--checked {
 				background-color: transparent;
 				color: var(--gs-100);
@@ -93,6 +91,7 @@ onMounted(() => {
 			width: 24px;
 			height: 24px;
 		}
+
 		img {
 			width: 100%;
 			height: 100%;

@@ -35,7 +35,7 @@ onBeforeMount(async () => {
 		<van-checkbox-group v-model="catModel" @change="updateCategory">
 
 			<categories-item v-for="(cat, index) in categories" @click="onToggleCategories(index)"
-											 :checked="catModel.includes(cat.id)" :key="cat.id" :cell="cell"
+											 :checked="catModel.includes(cat.id)" :image="cat.image" :key="cat.id" :cell="cell"
 											 :value="cat.id" :ref="el => checkboxRefs[index] = el" :label="cat.name" />
 		</van-checkbox-group>
 	</div>

@@ -43,7 +43,9 @@ const cartHidden = true
 			<!--			<div v-if="!products.length && loading" class="loading-wrapper">-->
 			<!--				<van-loading size="24px">Загрузка...</van-loading>-->
 			<!--			</div>-->
+			<van-empty v-if="loadFinished && !loading && !products.length" style="width: 100%" description="Упс!   Похоже что товаров нет..." />
 			<van-list
+				v-else
 				v-model:loading="loading"
 				:finished="loadFinished"
 				finished-text="Вы посмотрели все..."

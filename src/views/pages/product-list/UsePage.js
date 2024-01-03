@@ -60,8 +60,9 @@ export default function() {
 		}
 
 		await axios.get("product-list", { params }).then(({ data }) => {
-			if (!data.next) loadFinished.value = true
-			if (data.page) pagination.page = data.page
+			
+			if (!data.links?.next) loadFinished.value = true
+			if (data.current_page_number) pagination.page = data.current_page_number
 
 			if (products.value.length) products.value = [...products.value, ...data.results]
 			else products.value = data.results
