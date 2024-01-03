@@ -12,7 +12,7 @@ const catModel = ref([])
 const checkboxRefs = ref([])
 
 const getCategoriesList = async () => {
-	await axios.get("categories").then(({ data }) => {
+	await axios.get("category-list").then(({ data }) => {
 		categories.value = data.map((el) => {
 			return { ...el, checked: false }
 		})

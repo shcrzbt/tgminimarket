@@ -59,7 +59,7 @@ export default function() {
 			category_id: filters.category, search: filters.search, page: pagination.page
 		}
 
-		await axios.get("products", { params }).then(({ data }) => {
+		await axios.get("product-list", { params }).then(({ data }) => {
 			if (!data.next) loadFinished.value = true
 			if (data.page) pagination.page = data.page
 
