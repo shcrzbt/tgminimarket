@@ -1,9 +1,12 @@
 import { computed, onBeforeMount, reactive, ref } from "vue"
 import WebApp from "@twa-dev/sdk"
 import axios from "@/plugins/axios"
-import { useDebounceFn } from "@vueuse/core"
+import { useDebounceFn, useWindowSize } from "@vueuse/core"
+import { useProductStore } from "@/stores/productStore"
 
 export default function() {
+	const { width, height } = useWindowSize()
+	const productStore = useProductStore()
 
 	const products = ref([])
 	const loading = ref(false)
@@ -51,38 +54,41 @@ export default function() {
 		await getProductList()
 	}
 
-
 	const getProductList = async () => {
 		loading.value = true
-
+		console.log(height.value,'height.value')
 		let params = {
-			category_id: filters.category, search: filters.search, page: pagination.page
+			category_id: filters.category.join(","),
+			search: filters.search,
+			page_size: Math.ceil((height.value - 220)/250)*2+2,
+			page: pagination.page
 		}
 
-		await axios.get("product-list", { params }).then(({ data }) => {
-			
+		await axios.get("product-list/", { params }).then(({ data }) => {
+
 			if (!data.links?.next) loadFinished.value = true
 			if (data.current_page_number) pagination.page = data.current_page_number
 
 			if (products.value.length) products.value = [...products.value, ...data.results]
 			else products.value = data.results
 
-		}).catch(err => {
-			loadFinished.value = true
-
-		}).finally(() => {
-			loading.value = false
-		})
+		}).catch(err => loadFinished.value = true)
+			.finally(() => loading.value = false)
 
 	}
 
-	const onListLoad = async () => {
+	const getCategoriesList = async () => {
+		productStore.setCategoriesLoading(true)
+		await axios.get("category-list/").then(resp => productStore.setCategories(resp.data))
+			.finally(() => productStore.setCategoriesLoading(false))
+	}
+
+	const onListLoad = useDebounceFn(async () => {
 		if (!loadFinished.value) {
 			pagination.page += 1
 			await getProductList()
 		}
-
-	}
+	}, 500)
 
 	const onSubmitFilter = async () => {
 		popupModel.value = false
@@ -111,7 +117,8 @@ export default function() {
 	onBeforeMount(async () => {
 		WebApp.ready()
 		WebApp.expand()
-		await getProductList()
+		getProductList()
+		getCategoriesList()
 	})
 
 

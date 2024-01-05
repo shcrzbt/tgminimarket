@@ -1,22 +1,15 @@
 <script setup lang="js">
-import { onBeforeMount, ref } from "vue"
-import axios from "@/plugins/axios"
+import { ref } from "vue"
 import CategoriesItem from "@/components/Filters/CategoriesItem.vue"
+import { useProductStore } from "@/stores/productStore"
+
+const productStore = useProductStore()
 
 defineProps(["category", "cell"])
 const emit = defineEmits(["update:category"])
 
-const categories = ref([])
 const catModel = ref([])
 const checkboxRefs = ref([])
-
-const getCategoriesList = async () => {
-	await axios.get("category-list").then(({ data }) => {
-		categories.value = data.map((el) => {
-			return { ...el, checked: false }
-		})
-	})
-}
 
 const updateCategory = (val) => {
 	emit("update:category", val)
@@ -24,9 +17,7 @@ const updateCategory = (val) => {
 const onToggleCategories = (index) => {
 	checkboxRefs.value[index].toggleCheckbox()
 }
-onBeforeMount(async () => {
-	await getCategoriesList()
-})
+
 </script>
 
 
@@ -34,7 +25,7 @@ onBeforeMount(async () => {
 	<div class="categories-list" :class="{'categories-list--cell':cell}">
 		<van-checkbox-group v-model="catModel" @change="updateCategory">
 
-			<categories-item v-for="(cat, index) in categories" @click="onToggleCategories(index)"
+			<categories-item v-for="(cat, index) in productStore.categories" @click="onToggleCategories(index)"
 											 :checked="catModel.includes(cat.id)" :image="cat.image" :key="cat.id" :cell="cell"
 											 :value="cat.id" :ref="el => checkboxRefs[index] = el" :label="cat.name" />
 		</van-checkbox-group>

@@ -1,7 +1,9 @@
 <script setup lang="js">
 import { onBeforeMount, ref } from "vue"
 import axios from "@/plugins/axios"
+import { useProductStore } from "@/stores/productStore"
 
+const productStore = useProductStore()
 
 defineProps(["category"])
 const emit = defineEmits(["update:category"])
@@ -15,7 +17,7 @@ const isCheckAll = ref(false)
 const isIndeterminate = ref(false)
 
 const getCategoriesList = async () => {
-	await axios.get("category-list").then(({ data }) => {
+	await axios.get("category-list/").then(({ data }) => {
 		categories.value = data.map((el)=> {
 			return {...el, checked: false}
 		})
