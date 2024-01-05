@@ -12,7 +12,7 @@ const emit = defineEmits(["update:search", "cart"])
 
 		<div class="product-item">
 			<div class="product-item__image">
-				<lazy-component>
+				<lazy-component style="width:100%; height:100%">
 					<van-image lazy-load :src="product?.image1" v-lazy="product?.image1" />
 				</lazy-component>
 				<div class="tag-new">

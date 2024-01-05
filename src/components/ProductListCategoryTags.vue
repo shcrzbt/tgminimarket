@@ -1,5 +1,5 @@
 <script setup lang="js">
-import { ref } from "vue"
+import {computed, ref} from "vue"
 import { useProductStore } from "@/stores/productStore"
 import CategoryTag from "@/components/Filters/CategoryTag.vue"
 
@@ -8,7 +8,10 @@ const productStore = useProductStore()
 defineProps(["category", "cell"])
 const emit = defineEmits(["update:category"])
 
-const catModel = ref([])
+const catModel = computed({
+  get: ()=> productStore.selectedCategories,
+  set:(val)=> productStore.setSelectedCategories(val)
+})
 const checkboxRefs = ref([])
 
 const updateCategory = (val) => {

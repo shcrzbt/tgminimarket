@@ -20,7 +20,8 @@ body {
 
 #app {
   background-color: var(--bg-secondary-3);
-  height: 100svh;
-  width: 38.4rem;
+  min-height: 100svh;
+  width: 76.8rem;
+  max-width: 100%;
   margin: 0 auto;
 }

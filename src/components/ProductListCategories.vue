@@ -1,5 +1,5 @@
 <script setup lang="js">
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import CategoriesItem from "@/components/Filters/CategoriesItem.vue"
 import { useProductStore } from "@/stores/productStore"
 
@@ -8,10 +8,16 @@ const productStore = useProductStore()
 defineProps(["category", "cell"])
 const emit = defineEmits(["update:category"])
 
-const catModel = ref([])
+const catModel = computed({
+  get: ()=> productStore.selectedCategories,
+  set:(val)=> productStore.setSelectedCategories(val)
+})
+
 const checkboxRefs = ref([])
 
 const updateCategory = (val) => {
+  console.log(val, 'fff')
+  productStore.setSelectedCategories(val)
 	emit("update:category", val)
 }
 const onToggleCategories = (index) => {
@@ -48,14 +54,17 @@ const onToggleCategories = (index) => {
 
 	}
 
-	&:not(.categories-list--cell) :deep(.van-checkbox-group) {
+	:deep(.van-checkbox-group::-webkit-scrollbar)  {
+      display: none;
+	}
+
+  &:not(.categories-list--cell) :deep(.van-checkbox-group) {
 		@include flex(.4rem, row, start, start);
 
 		width: 100%;
 		max-width: 100%;
 		overflow-x: auto;
-		padding: 8px 0 12px 0;
-		clip-path: inset(0 0 10px 0);
+		//padding: 8px 0 12px 0;
 
 	}
 
@@ -68,9 +77,7 @@ const onToggleCategories = (index) => {
 
 	}
 
-	&::-webkit-scrollbar {
-		display: none;
-	}
+
 }
 </style>
 

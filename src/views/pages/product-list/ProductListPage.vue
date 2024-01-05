@@ -78,7 +78,7 @@ const cartHidden = true
 		@include flex(.8rem, column, start, start);
 
 		width: 100%;
-		padding: 8px 0 8px 0;
+		padding: 0 0 8px 0;
 	}
 }
 

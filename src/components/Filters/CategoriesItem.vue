@@ -50,14 +50,15 @@ onMounted(() => {
 	@include flex(.8rem, column, start, center);
 	cursor: pointer;
 	max-width: 84px;
-	border-radius: 1.6rem;
-	padding: .8rem;
+
 
 	&--checked {
 		background-color: var(--bg-secondary-3);
 	}
 
 	&--cell {
+    border-radius: 1.6rem;
+    padding: .8rem;
 		.category-item__label {
 			padding: 0;
 			text-align: center;
