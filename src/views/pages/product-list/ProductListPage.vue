@@ -10,7 +10,7 @@ import ProductListSearch from "@/components/ProductListSearch.vue"
 import { ref } from "vue"
 
 const { x, y } = useWindowScroll()
-const activeTabBar = ref("")
+const activeTabBar = ref(0)
 const {
 	loading,
 	selectedProductsCount,
@@ -70,7 +70,7 @@ const cartHidden = true
 
 		</div>
 		<back-to-top />
-		<van-tabbar v-model="activeTabBar" active-color="var(--main-secondary)" inactive-color="#91969B">
+		<van-tabbar v-if="false" v-model="activeTabBar" active-color="var(--main-secondary)" inactive-color="#91969B">
 			<van-tabbar-item :to="{name:'product.list'}">
 				<span>Главная</span>
 				<template #icon="props">
@@ -79,9 +79,9 @@ const cartHidden = true
 				</template>
 			</van-tabbar-item>
 
-			<van-tabbar-item icon="search">Каталог</van-tabbar-item>
+			<van-tabbar-item @click.prevent icon="search">Каталог</van-tabbar-item>
 
-			<van-tabbar-item>
+			<van-tabbar-item @click.prevent>
 				<span>Корзина</span>
 				<template #icon="props">
 					<van-icon v-if="props.active" name="shopping-cart"></van-icon>
@@ -89,15 +89,15 @@ const cartHidden = true
 				</template>
 			</van-tabbar-item>
 
-			<van-tabbar-item>
+			<van-tabbar-item @click.prevent>
 				<span>Избранное</span>
 				<template #icon="props">
 					<van-icon v-if="props.active" name="like"></van-icon>
 					<van-icon v-else name="like-o"></van-icon>
 				</template>
-			</van-tabbar-item>
+			</van-tabbar-item >
 
-			<van-tabbar-item>
+			<van-tabbar-item @click.prevent>
 				<span>Профиль</span>
 				<template #icon="props">
 					<van-icon v-if="props.active" name="user"></van-icon>
