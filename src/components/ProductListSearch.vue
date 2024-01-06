@@ -2,6 +2,7 @@
 import { ref } from "vue"
 import WebApp from "@twa-dev/sdk"
 import ProductListCategories from "@/components/ProductListCategories.vue"
+import { filterIcon } from "@/components/icons/svg"
 
 defineProps(["search", "price", "category"])
 const emit = defineEmits(["update:search", "update:price", "update:category", "filter", "searchProducts"])
@@ -45,12 +46,8 @@ const updateCategory = (val) => {
 			show-action
 			placeholder="Введите название товара">
 			<template #action>
-				<van-icon
-					style="width: 4.5rem; text-align:center; color: var(--main-secondary)"
-					name="like-o"
-					size="32"
-					type="primary"
-					@click="() => (popupModel = true)"></van-icon>
+				<filter-icon style="width: 4.5rem; text-align:center; color: var(--main-secondary)" @click="() => (popupModel = true)" size="40"/>
+
 			</template>
 		</van-search>
 	</div>

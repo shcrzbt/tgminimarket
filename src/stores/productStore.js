@@ -16,5 +16,5 @@ export const useProductStore = defineStore("product", () => {
 		selectedCategories.value = cats
 	}
 
-	return { categories, selectedCategories, setSelectedCategories, setCategories, setCategoriesLoading}
+	return { categories, selectedCategories,categoriesLoading, setSelectedCategories, setCategories, setCategoriesLoading}
 })

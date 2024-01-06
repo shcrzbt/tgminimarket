@@ -1,8 +1,20 @@
 <script setup lang="js">
+import { computed } from "vue"
 
-defineProps(["product", "index"])
-const emit = defineEmits(["update:search", "cart"])
+const props = defineProps(["product", "index"])
+ defineEmits(["update:search", "cart"])
 
+const getLastWeeksDate = () => {
+	const now = new Date()
+
+	return new Date(
+		now.getFullYear(),
+		now.getMonth(),
+		now.getDate() - 6
+	)
+}
+
+const isNewProduct = computed(() => new Date(props.product.create_time) >= getLastWeeksDate())
 
 </script>
 
@@ -15,12 +27,15 @@ const emit = defineEmits(["update:search", "cart"])
 				<lazy-component style="width:100%; height:100%">
 					<van-image lazy-load :src="product?.image1" v-lazy="product?.image1" />
 				</lazy-component>
-				<div class="tag-new">
+				<div class="tag-new" v-if="isNewProduct">
 					Новинка
 				</div>
 				<div class="tags">
-					<div class="tag">
+					<div class="tag" v-if="product.discounted_price">
 						% Скидка
+					</div>
+					<div class="tag" v-if="product.discounted_price">
+						<van-count-down millisecond :time="30000000" format="HH:mm:ss" />
 					</div>
 
 				</div>
@@ -29,9 +44,13 @@ const emit = defineEmits(["update:search", "cart"])
 				<p>{{ product.name }}</p>
 				<div class="tag-n-price">
 
-					<div class="price">${{ product.price.toFixed(2) }}
-						<del>${{ (product.price + (Number(product.price) * 0.15)).toFixed(2) }}</del>
+					<div v-if="product.discounted_price" class="price">${{ product.discounted_price.toFixed(2) }}
+						<del>${{ product.price.toFixed(2) }}</del>
 					</div>
+
+					<div v-else class="price">${{ product.price.toFixed(2) }}</div>
+
+
 				</div>
 			</div>
 
@@ -84,15 +103,24 @@ const emit = defineEmits(["update:search", "cart"])
 		}
 
 		.tags {
+			@include flex(.4rem, row, start, center);
 			position: absolute;
 			bottom: .8rem;
 			left: .8rem;
 
 			.tag {
-				padding: .4rem .8rem;
+				@include getFont('p4');
+				font-size: 1rem !important;
+				padding: 0 .4rem;
 				background-color: var(--main-secondary);
 				color: var(--bg-primary);
 				border-radius: .8rem;
+
+				:deep(.van-count-down) {
+					@include getFont('p4');
+					font-size: 1rem !important;
+					--van-count-down-text-color: var(--bg-primary) !important;
+				}
 			}
 
 		}

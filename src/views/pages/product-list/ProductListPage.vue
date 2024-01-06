@@ -1,4 +1,5 @@
 <script setup lang="js">
+
 import usePage from "./UsePage"
 import ProductItem from "@/components/ProductItem.vue"
 import BackToTop from "@/components/BackToTop.vue"
@@ -6,9 +7,10 @@ import ProductListCategories from "@/components/ProductListCategories.vue"
 import ProductListCategoryTags from "@/components/ProductListCategoryTags.vue"
 import { useWindowScroll } from "@vueuse/core"
 import ProductListSearch from "@/components/ProductListSearch.vue"
+import { ref } from "vue"
 
 const { x, y } = useWindowScroll()
-
+const activeTabBar = ref("")
 const {
 	loading,
 	selectedProductsCount,
@@ -30,7 +32,8 @@ const cartHidden = true
 <template>
 	<div class="product-list-page">
 		<transition name="van-slide-down">
-			<product-list-category-tags v-if="y > 180"  v-model:category="filters.category" @update:category="onCategoryFilter" />
+			<product-list-category-tags v-if="y > 180" v-model:category="filters.category"
+																	@update:category="onCategoryFilter" />
 		</transition>
 
 		<ProductListSearch v-model:search="filters.search" v-model:price="filters.price" v-model:category="filters.category"
@@ -43,10 +46,11 @@ const cartHidden = true
 			<!--			<div v-if="!products.length && loading" class="loading-wrapper">-->
 			<!--				<van-loading size="24px">Загрузка...</van-loading>-->
 			<!--			</div>-->
-			<van-empty v-if="loadFinished && !loading && !products.length" style="width: 100%" description="Упс!   Похоже что товаров нет..." />
+			<van-empty v-if="loadFinished && !loading.products && !products.length" style="width: 100%"
+								 description="Упс!   Похоже что товаров нет..." />
 			<van-list
 				v-else
-				v-model:loading="loading"
+				v-model:loading="loading.products"
 				:finished="loadFinished"
 				finished-text="Вы посмотрели все..."
 				@load="onListLoad"
@@ -66,11 +70,55 @@ const cartHidden = true
 
 		</div>
 		<back-to-top />
+		<van-tabbar v-model="activeTabBar" active-color="var(--main-secondary)" inactive-color="#91969B">
+			<van-tabbar-item :to="{name:'product.list'}">
+				<span>Главная</span>
+				<template #icon="props">
+					<van-icon v-if="props.active" name="wap-home"></van-icon>
+					<van-icon v-else name="wap-home-o"></van-icon>
+				</template>
+			</van-tabbar-item>
 
+			<van-tabbar-item icon="search">Каталог</van-tabbar-item>
+
+			<van-tabbar-item>
+				<span>Корзина</span>
+				<template #icon="props">
+					<van-icon v-if="props.active" name="shopping-cart"></van-icon>
+					<van-icon v-else name="shopping-cart-o"></van-icon>
+				</template>
+			</van-tabbar-item>
+
+			<van-tabbar-item>
+				<span>Избранное</span>
+				<template #icon="props">
+					<van-icon v-if="props.active" name="like"></van-icon>
+					<van-icon v-else name="like-o"></van-icon>
+				</template>
+			</van-tabbar-item>
+
+			<van-tabbar-item>
+				<span>Профиль</span>
+				<template #icon="props">
+					<van-icon v-if="props.active" name="user"></van-icon>
+					<van-icon v-else name="user-o"></van-icon>
+				</template>
+			</van-tabbar-item>
+
+		</van-tabbar>
 	</div>
 </template>
 
 <style lang="scss">
+.van-tabbar{
+	border-radius: 1rem 1rem 0 0;
+	padding: 0.4rem 0 1.2rem 0;
+	box-shadow: var(--shadow-2);
+}
+.van-tabbar-item__text {
+	font-size: 12px;
+	font-weight: 300;
+}
 .product-list-page {
 	width: 100%;
 

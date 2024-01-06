@@ -1,11 +1,12 @@
 <script setup lang="js">
-import { ref, computed } from "vue"
+import { computed, ref } from "vue"
 import CategoriesItem from "@/components/Filters/CategoriesItem.vue"
 import { useProductStore } from "@/stores/productStore"
 
 const productStore = useProductStore()
 
 defineProps(["category", "cell"])
+
 const emit = defineEmits(["update:category"])
 
 const catModel = computed({
@@ -16,7 +17,6 @@ const catModel = computed({
 const checkboxRefs = ref([])
 
 const updateCategory = (val) => {
-  console.log(val, 'fff')
   productStore.setSelectedCategories(val)
 	emit("update:category", val)
 }
@@ -29,12 +29,15 @@ const onToggleCategories = (index) => {
 
 <template>
 	<div class="categories-list" :class="{'categories-list--cell':cell}">
-		<van-checkbox-group v-model="catModel" @change="updateCategory">
+		<van-checkbox-group v-if="!productStore.categoriesLoading" v-model="catModel" @change="updateCategory">
 
 			<categories-item v-for="(cat, index) in productStore.categories" @click="onToggleCategories(index)"
 											 :checked="catModel.includes(cat.id)" :image="cat.image" :key="cat.id" :cell="cell"
 											 :value="cat.id" :ref="el => checkboxRefs[index] = el" :label="cat.name" />
 		</van-checkbox-group>
+		<div v-else class="categories-skeleton-list" >
+			<categories-skeleton v-for="cat in 10"  />
+		</div>
 	</div>
 </template>
 

@@ -9,7 +9,9 @@ export default function() {
 	const productStore = useProductStore()
 
 	const products = ref([])
-	const loading = ref(false)
+	const loading = reactive({
+		products: false
+	})
 	const loadFinished = ref(false)
 	const popupModel = ref(false)
 	const selectedProductIds = ref({})
@@ -46,34 +48,35 @@ export default function() {
 		return prodCount
 	})
 
-	const searchProducts = async () => {
+	const searchProducts = useDebounceFn(async () => {
 		let searchValue = filters.search.trimStart()
 
-		if (!searchValue) return
-
+		pagination.page = 1
 		await getProductList()
-	}
+	}, 500)
 
-	const getProductList = async () => {
-		loading.value = true
-		console.log(height.value,'height.value')
+
+	const getProductList = async (append = false) => {
+		loading.products = true
+
 		let params = {
-			category_id: filters.category.join(","),
+			category_id__in: filters.category.join(","),
 			search: filters.search,
-			page_size: Math.ceil((height.value - 220)/250)*2+2,
+			page_size: Math.ceil((height.value - 220) / 250) * 2 + 2,
 			page: pagination.page
 		}
 
 		await axios.get("product-list/", { params }).then(({ data }) => {
-
 			if (!data.links?.next) loadFinished.value = true
-			if (data.current_page_number) pagination.page = data.current_page_number
+			// if (data.current_page_number) pagination.page = data.current_page_number
 
-			if (products.value.length) products.value = [...products.value, ...data.results]
-			else products.value = data.results
+			if (append && products.value.length)
+				products.value = [...products.value, ...data.results]
+			else
+				products.value = data.results
 
 		}).catch(err => loadFinished.value = true)
-			.finally(() => loading.value = false)
+			.finally(() => loading.products = false)
 
 	}
 
@@ -86,7 +89,7 @@ export default function() {
 	const onListLoad = useDebounceFn(async () => {
 		if (!loadFinished.value) {
 			pagination.page += 1
-			await getProductList()
+			await getProductList(true)
 		}
 	}, 500)
 
@@ -97,7 +100,10 @@ export default function() {
 	}
 
 	const onCategoryFilter = useDebounceFn(async () => {
-		if (!filters.category.length) return
+
+		// if (!filters.category.length) return
+
+		pagination.page = 1
 		await getProductList()
 	}, 500)
 
@@ -117,8 +123,8 @@ export default function() {
 	onBeforeMount(async () => {
 		WebApp.ready()
 		WebApp.expand()
-		getProductList()
 		getCategoriesList()
+		getProductList()
 	})
 
 
