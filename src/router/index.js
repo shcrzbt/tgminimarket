@@ -44,7 +44,7 @@ router.beforeEach(async (to, from, next) => {
 	} else {
 		WebApp.BackButton.hide()
 		WebApp.BackButton.offClick()
-
+		document.activeElement.blur();
 	}
 	next()
 })
