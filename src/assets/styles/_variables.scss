@@ -8,6 +8,7 @@
   // ___main-colors
   --main-primary: #C3E703;
   --main-secondary: #96D1C7;
+  --main-secondary-lt-20: rgba(150, 209, 199, 0.2);
   --main-secondary-2: #91969B;
 
   --blue: #0085ff;
@@ -20,6 +21,7 @@
   --gs-200: #585757;
   --gs-300: #969696;
   --gs-400: #e8e8e8;
+  --gs-400-30: #E8E8E84C;
 
 
   // ___bg-colors
@@ -33,6 +35,7 @@
   --bg-red: #ffecec;
 
   // ___shadows
+  --shadow-1: 0px 4px 0px -35px rgba(0, 0, 0, 0.06), 0px 3px 6px 0px rgb(0 0 0 / 6%);
   --shadow-2: 0px 1px 1px 0px rgba(0, 0, 0, 0.08),
   0px 2px 1px 0px rgba(0, 0, 0, 0.06), 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
   --shadow-3: 0px 6px 10px 0px rgba(0, 0, 0, 0.08),
