@@ -1,5 +1,4 @@
 <script setup>
-
 import ProductCardThumbTags from "@/modules/product-card/components/ProductCardThumbTags.vue"
 
 defineProps(["product", "tags", "isNew"])

@@ -1,18 +1,21 @@
-import { reactive, ref, watch } from "vue"
+import { onMounted, reactive, ref, watch } from "vue"
 import axios from "@/plugins/axios"
 import { useDebounceFn } from "@vueuse/core"
 import { useLayoutStore } from "@/stores/layoutStore"
 import { storeToRefs } from "pinia"
 import { noSpace } from "@/utils/functions"
+import WebApp from "@twa-dev/sdk"
+import { useRouter } from "vue-router"
+
 
 export default function() {
+	const router = useRouter()
 	const layoutStore = useLayoutStore()
 	const { searchValue } = storeToRefs(layoutStore)
 
 	watch(searchValue, async (newVal) => await onSearch())
 
 	const products = ref([])
-	const blockSearching = ref(false)
 	const loading = reactive({
 		main: false,
 		scroll: false
@@ -73,6 +76,12 @@ export default function() {
 			await getProductList(true)
 		}
 	}, 500)
+
+	onMounted(()=> {
+		WebApp.onEvent("backButtonClicked", ()=> {
+			router.go(-1)
+		})
+	})
 
 	return {
 		loading,

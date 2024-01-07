@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router"
+import WebApp from "@twa-dev/sdk"
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -6,7 +7,7 @@ const router = createRouter({
 		{
 			path: "/",
 			name: "main",
-			redirect: { name: "product.list" },
+			redirect: { name: "product.list" }
 		},
 		{
 			path: "/products",
@@ -19,17 +20,34 @@ const router = createRouter({
 		{
 			path: "/products/:id",
 			name: "product.detail",
-			component: () => import("@/views/pages/product-detail/ProductDetailPage.vue"),
+			component: () => import("@/views/pages/product-detail/ProductDetailPage.vue")
 		},
 		{
 			path: "/search",
 			name: "product.search",
 			component: () => import("@/views/pages/search-results/SearchResultsPage.vue"),
 			meta: {
-				layout: "MainLayout"
+				layout: "MainLayout",
+				backButton: true
 			}
-		},
-	],
-});
+		}
+	]
+})
 
-export default router;
+
+router.beforeEach(async (to, from, next) => {
+	if (to.meta.backButton) {
+		WebApp.BackButton.show()
+		WebApp.BackButton.onClick(() => {
+			router.go(-1)
+		})
+	} else {
+		WebApp.BackButton.hide()
+		WebApp.BackButton.offClick()
+
+	}
+	next()
+})
+
+
+export default router
