@@ -9,7 +9,9 @@ const isFavorite = ref(false)
 <template>
 	<div class="product-view-thumb">
 		<div class="product-view-thumb__buttons">
-			<div class="product-view-thumb__buttons-left"></div>
+			<div class="product-view-thumb__buttons-left">
+				<van-button @click="$router.go(-1)" size="large" icon="arrow-left" class="product-view-thumb__button" round type="success"></van-button>
+			</div>
 			<div class="product-view-thumb__buttons-right">
 				<van-button @click="isFavorite = !isFavorite" size="large" :icon="isFavorite ? 'like':'like-o'" class="product-view-thumb__button"
 										:class="{'product-view-thumb__button--checked': isFavorite}" round type="success"></van-button>
@@ -50,7 +52,6 @@ const isFavorite = ref(false)
 		padding: 0;
 		width: 4.8rem;
 		height: 4.8rem;
-
 		background-color: var(--bg-secondary);
 		color: var(--main-secondary-2);
 		border: none;
@@ -62,11 +63,21 @@ const isFavorite = ref(false)
 
 	&__buttons {
 		@include flex(.8rem, row, space-between, center);
+		z-index: 9;
+		position: absolute;
 		width: 100%;
+		top: 0;
+		left: 0;
+
 		padding: var(--side-padding) var(--side-padding) 0;
 
 	}
 
+	&__buttons-left :deep(i){
+		margin-right: 0.4rem;
+		color: var(--gs-100);
+
+	}
 	&__buttons-right {
 		@include flex(.8rem, row, space-between, center);
 
