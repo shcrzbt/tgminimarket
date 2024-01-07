@@ -11,19 +11,12 @@ const {
 
 <template>
 	<div class="product-detail-page">
-		<van-swipe :autoplay="3000" width="768" >
-			<van-swipe-item :key="product.id">
-				<img :src="product.image1" />
-			</van-swipe-item>
-			<van-swipe-item :key="product.id">
-				<img :src="product.image2" />
-			</van-swipe-item>
-			<van-swipe-item :key="product.id">
-				<img :src="product.image3" />
-			</van-swipe-item>
+		<van-swipe width="100%" class="my-swipe" :autoplay="3000" indicator-color="white">
+			<van-swipe-item>1</van-swipe-item>
+			<van-swipe-item>2</van-swipe-item>
+			<van-swipe-item>3</van-swipe-item>
+			<van-swipe-item>4</van-swipe-item>
 		</van-swipe>
-
-
 	</div>
 </template>
 
@@ -35,5 +28,14 @@ const {
 	width: 100%;
 	padding: 0 0 8px 0;
 }
-
+.my-swipe .van-swipe-item {
+	color: #fff;
+	font-size: 20px;
+	line-height: 150px;
+	text-align: center;
+	background-color: #39a9ed;
+}
+.my-swipe  {
+	width: 100%;
+}
 </style>
