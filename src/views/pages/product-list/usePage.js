@@ -3,9 +3,11 @@ import WebApp from "@twa-dev/sdk"
 import axios from "@/plugins/axios"
 import { useDebounceFn, useWindowSize } from "@vueuse/core"
 import { useProductStore } from "@/stores/productStore"
+import { useRouter } from "vue-router"
 
 export default function() {
 	const { width, height } = useWindowSize()
+	const router = useRouter()
 	const productStore = useProductStore()
 
 	const products = ref([])
@@ -54,6 +56,10 @@ export default function() {
 		pagination.page = 1
 		await getProductList()
 	}, 500)
+
+	const showProduct = (id) => {
+		router.push({ name: "product.detail", params: { id } })
+	}
 
 
 	const getProductList = async (append = false) => {
@@ -138,6 +144,7 @@ export default function() {
 		onCategoryFilter,
 		onListLoad,
 		searchProducts,
+		showProduct,
 		onSubmitFilter
 	}
 }

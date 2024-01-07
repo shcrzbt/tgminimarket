@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SearchHeader from "@/components/layout/SearchHeader.vue"
+import BackToTop from "@/components/BackToTop.vue"
 </script>
 
 <template>
@@ -11,6 +12,8 @@ import SearchHeader from "@/components/layout/SearchHeader.vue"
 				<component ref="currentPageRef" :is="Component" />
 			</router-view>
 		</div>
+
+		<back-to-top />
 	</div>
 </template>
 
