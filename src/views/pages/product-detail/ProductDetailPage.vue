@@ -32,21 +32,19 @@ const {
 	padding: 0 0 8px 0;
 }
 
-.my-swipe
+
 .product-detail {
 	&__thumb {
 		--van-image-placeholder-background: var(--bg-secondary-2);
 		--van-image-loading-icon-size: 6.4rem;
 		width: 100%;
 		height: 60svh;
-
+		background-color: var(--bg-primary);
 		&-carousel {
 			width: 100%;
 			height: 100%;
 
-			:deep(.van-swipe-item ) {
-				background-color: var(--bg-primary);
-			}
+
 		}
 
 		:deep(.van-swipe__indicators) {
