@@ -1,10 +1,13 @@
 <script setup>
 import { onMounted, ref } from "vue"
 import AppLayout from "@/views/layouts/AppLayout.vue"
+import WebApp from "@twa-dev/sdk"
 
 const theme = ref('light')
 
 onMounted(()=> {
+	WebApp.backgroundColor = "#fff"
+	WebApp.themeParams.bg_color = "#fff"
 	// theme.value = WebApp.colorScheme
 	//
 	// WebApp.onEvent('themeChanged', ()=> {
