@@ -48,43 +48,44 @@ const images = computed(() => [product.value.image1, product.value.image2, produ
 	--thumb-side-padding: 0rem;
 	--side-padding: 2rem;
 	--thumb-height: calc(100svw - var(--thumb-side-padding));
+	--middle-gap: 0rem;
 }
 
 @media (min-width: 768px) {
 	:root {
-
 		--thumb-height: 76.8rem !important;
 	}
 }
 
 
-#app {
-	background-color: var(--bg-primary);
-}
+//#app {
+//	background-color: var(--bg-primary);
+//}
+
 </style>
 <style scoped lang="scss">
 
 
 .product-view-page {
-	@include flex(2.4rem, column, start, start);
-
+	@include flex(var(--middle-gap), column, start, start);
+	background-color: var(--bg-primary);
 	overflow: hidden;
 	width: 100%;
 	//padding: 0 0 1.2rem 0;
-	padding: 0 0 1.2rem 0;
+	padding: 0 ;
 }
 
 .product-view {
 	&-details {
 		@include flex(2.4rem, column, start, start);
 
-		min-height: calc(100svh - var(--thumb-height));
-		box-shadow: var(--shadow-1);
+		min-height: calc(100svh - var(--thumb-height) + var(--middle-gap));
 		background-color: var(--bg-secondary-4-lt-30);
 		width: 100%;
-		padding: 0 var(--side-padding);
+		padding: 0 var(--side-padding) var(--side-padding);
+		border-top: 1px solid var(--bg-secondary-4);
 		border-radius: 2.4rem 2.4rem 0 0;
-
+		box-shadow: 0px -4px 0px -35px rgb(0 0 0 / 10%), 0px -3px 6px 0px rgb(0 0 0 / 2%);
 		&__head {
 			@include flex(.8rem, column, start, start);
 			margin-top: 2.4rem;
