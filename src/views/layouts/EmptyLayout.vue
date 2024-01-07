@@ -1,11 +1,9 @@
-<script setup lang="ts">
-import BaseHeader from "@/components/layout/BaseHeader.vue"
-</script>
+<script setup lang="ts"></script>
 <template>
 	<div class="empty-layout">
-		<div class="empty-header">
-			<BaseHeader />
-		</div>
+<!--		<div class="empty-header">-->
+<!--			<BaseHeader />-->
+<!--		</div>-->
 		<div class="container">
 			<router-view />
 		</div>
@@ -13,6 +11,6 @@ import BaseHeader from "@/components/layout/BaseHeader.vue"
 </template>
 <style scoped lang="scss">
 .empty-layout {
-	padding-top: calc(9.6rem + 4.8rem);
+
 }
 </style>

@@ -1,7 +1,6 @@
 <script setup lang="js">
 
 import usePage from "./usePage"
-import BackToTop from "@/components/BackToTop.vue"
 import ProductListCategories from "@/components/ProductListCategories.vue"
 import ProductListCategoryTags from "@/components/ProductListCategoryTags.vue"
 import { useWindowScroll } from "@vueuse/core"
@@ -12,16 +11,13 @@ const { x, y } = useWindowScroll()
 const activeTabBar = ref(0)
 const {
 	loading,
-	selectedProductsCount,
-	selectedProductIds,
 	filters,
 	products,
-	showCatPicker,
 	onListLoad,
 	searchProducts,
 	onCategoryFilter,
 	loadFinished,
-	onSubmitFilter
+	showProduct
 } = usePage()
 
 
@@ -52,15 +48,15 @@ const cartHidden = true
 				<div class="product-list">
 					<van-grid :gutter="12" :column-num="2">
 						<van-grid-item v-for="(product, index) in products" :key="product.id+'prod'">
-							<product-card :product="product" :index="index"></product-card>
+							<product-card @click="showProduct(product.id)" :product="product"
+														:index="index"></product-card>
 						</van-grid-item>
 					</van-grid>
 				</div>
 
 			</van-list>
-		
+
 		</div>
-		<back-to-top />
 
 
 		<van-tabbar v-if="false" v-model="activeTabBar" active-color="var(--main-secondary)" inactive-color="#91969B">
@@ -88,7 +84,7 @@ const cartHidden = true
 					<van-icon v-if="props.active" name="like"></van-icon>
 					<van-icon v-else name="like-o"></van-icon>
 				</template>
-			</van-tabbar-item >
+			</van-tabbar-item>
 
 			<van-tabbar-item @click.prevent>
 				<span>Профиль</span>
@@ -103,11 +99,12 @@ const cartHidden = true
 </template>
 
 <style lang="scss">
-.van-tabbar{
+.van-tabbar {
 	border-radius: 1rem 1rem 0 0;
 	padding: 0.4rem 0 1.2rem 0;
 	box-shadow: var(--shadow-2);
 }
+
 .van-tabbar-item__text {
 	font-size: 12px;
 	font-weight: 300;
