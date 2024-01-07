@@ -11,11 +11,8 @@ const { x, y } = useWindowScroll()
 const activeTabBar = ref(0)
 const {
 	loading,
-	selectedProductsCount,
-	selectedProductIds,
 	filters,
 	products,
-	showCatPicker,
 	onListLoad,
 	searchProducts,
 	onCategoryFilter,

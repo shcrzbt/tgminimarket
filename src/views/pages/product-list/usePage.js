@@ -59,6 +59,7 @@ export default function() {
 
 	const showProduct = (id) => {
 		router.push({ name: "product.detail", params: { id } })
+		WebApp.HapticFeedback.impactOccurred("light")
 	}
 
 

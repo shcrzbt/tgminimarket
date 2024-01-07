@@ -11,12 +11,15 @@ const {
 
 <template>
 	<div class="product-detail-page">
-		<van-swipe width="100%" class="my-swipe" :autoplay="3000" indicator-color="white">
-			<van-swipe-item>1</van-swipe-item>
-			<van-swipe-item>2</van-swipe-item>
-			<van-swipe-item>3</van-swipe-item>
-			<van-swipe-item>4</van-swipe-item>
-		</van-swipe>
+		<div class="product-detail__thumb">
+			<van-swipe class="product-detail__thumb-carousel" indicator-color="var(--gs-100)" lazy-render>
+				<van-swipe-item v-for="img in 3">
+					<van-image fit="contain" width="100%" height="100%" :src="product['image'+img]" />
+				</van-swipe-item>
+
+			</van-swipe>
+		</div>
+
 	</div>
 </template>
 
@@ -28,14 +31,28 @@ const {
 	width: 100%;
 	padding: 0 0 8px 0;
 }
-.my-swipe .van-swipe-item {
-	color: #fff;
-	font-size: 20px;
-	line-height: 150px;
-	text-align: center;
-	background-color: #39a9ed;
-}
-.my-swipe  {
-	width: 100%;
+
+.my-swipe
+.product-detail {
+	&__thumb {
+		--van-image-placeholder-background: var(--bg-secondary-2);
+		--van-image-loading-icon-size: 6.4rem;
+		width: 100%;
+		height: 60svh;
+
+		&-carousel {
+			width: 100%;
+			height: 100%;
+
+			:deep(.van-swipe-item ) {
+				background-color: var(--bg-primary);
+			}
+		}
+
+		:deep(.van-swipe__indicators) {
+			right: 1.2rem;
+			left: unset !important;
+		}
+	}
 }
 </style>
