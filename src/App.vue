@@ -1,6 +1,6 @@
 <script setup>
-import { RouterView } from "vue-router"
 import { onMounted, ref } from "vue"
+import AppLayout from "@/views/layouts/AppLayout.vue"
 
 const theme = ref('light')
 
@@ -25,6 +25,6 @@ onMounted(()=> {
 
 <template>
 	<van-config-provider :theme="theme">
-	<RouterView />
+		<app-layout />
 	</van-config-provider>
 </template>

@@ -1,13 +1,12 @@
 <script setup lang="js">
 
-import usePage from "./UsePage"
-import ProductItem from "@/components/ProductItem.vue"
+import usePage from "./usePage"
 import BackToTop from "@/components/BackToTop.vue"
 import ProductListCategories from "@/components/ProductListCategories.vue"
 import ProductListCategoryTags from "@/components/ProductListCategoryTags.vue"
 import { useWindowScroll } from "@vueuse/core"
-import ProductListSearch from "@/components/ProductListSearch.vue"
 import { ref } from "vue"
+import ProductCard from "@/modules/product-card"
 
 const { x, y } = useWindowScroll()
 const activeTabBar = ref(0)
@@ -36,16 +35,10 @@ const cartHidden = true
 																	@update:category="onCategoryFilter" />
 		</transition>
 
-		<ProductListSearch v-model:search="filters.search" v-model:price="filters.price" v-model:category="filters.category"
-											 @filter="onSubmitFilter" @search-products="searchProducts" />
-
 		<div class="product-list-page__body">
 
 			<ProductListCategories v-model:category="filters.category" @update:category="onCategoryFilter" />
 
-			<!--			<div v-if="!products.length && loading" class="loading-wrapper">-->
-			<!--				<van-loading size="24px">Загрузка...</van-loading>-->
-			<!--			</div>-->
 			<van-empty v-if="loadFinished && !loading.products && !products.length" style="width: 100%"
 								 description="Упс!   Похоже что товаров нет..." />
 			<van-list
@@ -56,20 +49,20 @@ const cartHidden = true
 				@load="onListLoad"
 				style="width:100%"
 			>
-				<!--			<div class="product-list" :class="{ 'action-button-shown': showActionButton }">-->
 				<div class="product-list">
-					<div class="filters"></div>
-
-
 					<van-grid :gutter="12" :column-num="2">
-						<product-item v-for="(product, index) in products" :key="product.id+'prod'" :product="product"
-													:index="index" />
+						<van-grid-item v-for="(product, index) in products" :key="product.id+'prod'">
+							<product-card :product="product" :index="index"></product-card>
+						</van-grid-item>
 					</van-grid>
 				</div>
-			</van-list>
 
+			</van-list>
+		
 		</div>
 		<back-to-top />
+
+
 		<van-tabbar v-if="false" v-model="activeTabBar" active-color="var(--main-secondary)" inactive-color="#91969B">
 			<van-tabbar-item :to="{name:'product.list'}">
 				<span>Главная</span>
@@ -119,6 +112,7 @@ const cartHidden = true
 	font-size: 12px;
 	font-weight: 300;
 }
+
 .product-list-page {
 	width: 100%;
 

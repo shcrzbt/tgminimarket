@@ -1,0 +1,1 @@
+export const noSpace = (val)=> String(val).replace(/\s/g, '')
