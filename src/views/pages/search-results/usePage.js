@@ -41,7 +41,10 @@ export default function() {
 
 		return false
 	}
-
+	const showProduct = (id) => {
+		router.push({ name: "product.detail", params: { id } })
+		WebApp.HapticFeedback.impactOccurred("light")
+	}
 
 	const getProductList = async (append = false) => {
 
@@ -89,6 +92,7 @@ export default function() {
 		searchValue,
 		loadFinished,
 		onListLoad,
+		showProduct,
 		onSearch
 	}
 }

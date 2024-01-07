@@ -8,6 +8,7 @@ const {
 	onListLoad,
 	searchValue,
 	searchProducts,
+	showProduct,
 	loadFinished
 } = usePage()
 
@@ -31,7 +32,7 @@ const {
 
 				<van-grid :gutter="12" :column-num="2">
 					<van-grid-item v-for="(product, index) in products" :key="product.id+'prod'">
-						<product-card :product="product" :index="index"></product-card>
+						<product-card @click="showProduct(product.id)"  :product="product" :index="index"></product-card>
 					</van-grid-item>
 				</van-grid>
 

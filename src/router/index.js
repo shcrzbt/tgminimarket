@@ -22,7 +22,8 @@ const router = createRouter({
 			name: "product.detail",
 			component: () => import("@/views/pages/product-detail/ProductDetailPage.vue"),
 			meta: {
-				layout: "EmptyLayout"
+				layout: "EmptyLayout",
+				backButton: true
 			}
 		},
 		{
