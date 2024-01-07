@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "vue"
+import { computed, ref, watch } from "vue"
 import { useLayoutStore } from "@/stores/layoutStore"
 import { useRoute, useRouter } from "vue-router"
 
@@ -10,6 +10,12 @@ const route = useRoute()
 const router = useRouter()
 const layoutStore = useLayoutStore()
 const onSearch = () => emit("search")
+const searchRef = ref(null)
+
+watch(route.name, ()=> {
+	if (route.name === "product.list")
+	searchRef.value.blur()
+})
 
 const searchValue = computed({
 	get: () => layoutStore.searchValue,
@@ -24,6 +30,7 @@ const searchActive = computed(() => route.name === "product.search")
 
 		<div class="search-header__right">
 			<van-search
+				ref="searchRef"
 				v-model="searchValue"
 				@update:model-value="onSearch"
 				@focus="router.push({name:'product.search'})"
