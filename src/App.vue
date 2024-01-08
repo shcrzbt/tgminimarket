@@ -8,6 +8,8 @@ const theme = ref('light')
 onMounted(()=> {
 	WebApp.backgroundColor = "#fff"
 	WebApp.themeParams.bg_color = "#fff"
+
+	WebApp.enableClosingConfirmation()
 	// theme.value = WebApp.colorScheme
 	//
 	// WebApp.onEvent('themeChanged', ()=> {
